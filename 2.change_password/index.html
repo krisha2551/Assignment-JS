@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Change Password</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .box {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 300px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2>🔐 Change Password</h2>
+        <input type="password" id="cp" placeholder="Current Password">
+        <input type="password" id="np" placeholder="New Password">
+        <input type="password" id="cop" placeholder="Confirm Password">
+        <button onclick="change()">Change</button>
+    </div>
+
+    <script>
+        let store = "12345";
+
+        function change() {
+            let CurrentPassword = document.getElementById("cp").value;
+            let NewPassword = document.getElementById("np").value;
+            let ConfirmPassword = document.getElementById("cop").value;
+
+            if (CurrentPassword == store) {
+                if (NewPassword != CurrentPassword) {
+                    if (NewPassword == ConfirmPassword) {
+                        store = NewPassword;
+                        alert("✅ Password changed successfully!");
+                    } else {
+                        alert("❌ New password and confirm password do not match!");
+                    }
+                } else {
+                    alert("⚠️ New password should not be the same as current password.");
+                }
+            } else {
+                alert("❌ Current password is incorrect.");
+            }
+
+            // Optional: Clear fields
+            document.getElementById("cp").value = "";
+            document.getElementById("np").value = "";
+            document.getElementById("cop").value = "";
+        }
+    </script>
+
+</body>
+</html>
