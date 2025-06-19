@@ -1,94 +1,154 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Change Password</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Change Password</title>
 
-        .box {
-            background-color: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-            width: 300px;
-        }
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <!-- Font Awesome for eye icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-        h2 {
-            text-align: center;
-            color: #2c3e50;
-        }
+  <style>
+    
+    body {
+      background: linear-gradient(to right, #dfe9f3, #ffffff);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 16px;
-        }
+    .change-box {
+      max-width: 500px;
+      margin: 60px auto;
+      padding: 30px 40px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    }
 
-        button {
-            width: 100%;
-            padding: 10px;
-            background-color: #3498db;
-            color: white;
-            border: none;
-            font-size: 16px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
+    .btn-submit {
+      background-color: #007bff;
+      color: white;
+      font-weight: 500;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+    }
 
-        button:hover {
-            background-color: #2980b9;
-        }
-    </style>
+    .btn-submit:hover {
+      background-color: #0056b3;
+    }
+
+    .input-group-text {
+      background-color: white;
+      border-left: none;
+      cursor: pointer;
+    }
+
+    .form-control:focus {
+      box-shadow: none;
+    }
+
+  </style>
+
 </head>
+
 <body>
 
-    <div class="box">
-        <h2>🔐 Change Password</h2>
-        <input type="password" id="cp" placeholder="Current Password">
-        <input type="password" id="np" placeholder="New Password">
-        <input type="password" id="cop" placeholder="Confirm Password">
-        <button onclick="change()">Change</button>
+  <div class="change-box">
+    <h3 class="text-center">🔒 Change Password</h3>
+
+    <!-- Current Password -->
+    <div class="mb-3">
+      <label for="cp" class="form-label">Current Password</label>
+      <div class="input-group">
+        <input type="password" class="form-control" id="cp" placeholder="Enter current password">
+        <span class="input-group-text" onclick="showPassword('cp', this)">
+          <i class="fa-solid fa-eye"></i>
+        </span>
+      </div>
     </div>
 
-    <script>
-        let store = "12345";
+    <!-- New Password -->
+    <div class="mb-3">
+      <label for="np" class="form-label">New Password</label>
+      <div class="input-group">
+        <input type="password" class="form-control" id="np" placeholder="Enter new password">
+        <span class="input-group-text" onclick="showPassword('np', this)">
+          <i class="fa-solid fa-eye"></i>
+        </span>
+      </div>
+    </div>
 
-        function change() {
-            let CurrentPassword = document.getElementById("cp").value;
-            let NewPassword = document.getElementById("np").value;
-            let ConfirmPassword = document.getElementById("cop").value;
+    <!-- Confirm Password -->
+    <div class="mb-3">
+      <label for="cop" class="form-label">Confirm Password</label>
+      <div class="input-group">
+        <input type="password" class="form-control" id="cop" placeholder="Re-enter new password">
+        <span class="input-group-text" onclick="showPassword('cop', this)">
+          <i class="fa-solid fa-eye"></i>
+        </span>
+      </div>
+    </div>
 
-            if (CurrentPassword == store) {
-                if (NewPassword != CurrentPassword) {
-                    if (NewPassword == ConfirmPassword) {
-                        store = NewPassword;
-                        alert("✅ Password changed successfully!");
-                    } else {
-                        alert("❌ New password and confirm password do not match!");
-                    }
-                } else {
-                    alert("⚠️ New password should not be the same as current password.");
-                }
-            } else {
-                alert("❌ Current password is incorrect.");
-            }
-
-            // Optional: Clear fields
-            document.getElementById("cp").value = "";
-            document.getElementById("np").value = "";
-            document.getElementById("cop").value = "";
-        }
-    </script>
-
+    <div class="text-center">
+      <button class="btn-submit" onclick="change()">Submit</button>
+    </div>
+  </div>
 </body>
+
+  <script>
+    let store = "krisha12";
+
+    function change() 
+    {
+      let CurrentPassword = document.getElementById("cp").value;
+      let NewPassword = document.getElementById("np").value;
+      let ConfirmPassword = document.getElementById("cop").value;
+
+      if (CurrentPassword === store) 
+      {
+        if (NewPassword !== CurrentPassword) 
+        {
+          if (NewPassword === ConfirmPassword) 
+          {
+            store = NewPassword;
+            window.alert("✅ Password changed successfully!");
+          } 
+          else 
+          {
+            window.alert("❌ New password and confirm password do not match.");
+          }
+        } 
+        else 
+        {
+          window.alert("⚠️ New password should be different from current password.");
+        }
+      } 
+      else 
+      {
+        window.alert("❌ Current password is incorrect.");
+      }
+    }
+
+    function showPassword(inputId, iconElement) 
+    {
+      let input = document.getElementById(inputId);
+      let icon = iconElement.querySelector("i");
+
+      if (input.type === "password") 
+      {
+        input.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+      } 
+      else 
+      {
+        input.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+      }
+    }
+  </script>
+
 </html>
