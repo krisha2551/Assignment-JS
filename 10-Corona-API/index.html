@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Corona API</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+  <style>
+    body {
+      background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSf-5hEu3i-rZE66_GGF7KWcEHRuj49hLlrBA&s");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      min-height: 100vh;
+    }
+
+    h2 {
+      color: white;
+      text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+    }
+
+    #coronaCard .card {
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 15px;
+      backdrop-filter: blur(5px);
+    }
+
+    
+    select.states {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="row my-5 justify-content-center align-items-center">
+      <h2 class="text-center mt-5 mb-4">COVID-19 Cases by State</h2>
+      <div class="col-md-5">
+        <select class="form-select states shadow-sm" id="city">
+          <option selected disabled>Select State</option>
+        </select>
+
+        <div id="coronaCard"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+let url = 'https://api.rootnet.in/covid19-in/stats/latest';
+let card = document.querySelector("#coronaCard");
+
+fetch(url)
+.then(res => res.json())
+.then(res => {
+  showStates(res);
+});
+
+function showStates(resp){ 
+  resp.data.regional.forEach(st => {
+    document.querySelector(".states").innerHTML += `<option value="${st.loc}">${st.loc}</option>`;
+  });
+
+  document.querySelector(".states").onchange = function(e){
+    let data = resp.data.regional.filter(st => st.loc == e.target.value);
+
+    card.innerHTML = `
+      <div class="card p-3 shadow mt-3">
+        <h4 class="mb-3">${data[0].loc}</h4>
+        <div class="mb-2 p-2 border rounded">
+          <p>Foreign Cases: <b>${data[0].confirmedCasesForeign}</b></p>
+        </div>
+        <div class="mb-2 p-2 border rounded">
+          <p>Indian Cases: <b>${data[0].confirmedCasesIndian}</b></p>
+        </div>
+        <div class="mb-2 p-2 border rounded">
+          <p>Deaths: <b>${data[0].deaths}</b></p>
+        </div>
+        <div class="mb-2 p-2 border rounded">
+          <p>Discharged: <b>${data[0].discharged}</b></p>
+        </div>
+        <div class="mb-2 p-2 border rounded">
+          <p>Total Confirmed: <b>${data[0].totalConfirmed}</b></p>
+        </div>
+      </div>
+    `;
+  }
+}
+</script>
+</body>
+</html>
